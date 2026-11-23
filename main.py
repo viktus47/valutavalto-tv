@@ -1,5 +1,3 @@
-main.py
-
 import tkinter as tk
 
 from tv_valuta import TvValutaValto
