@@ -8,7 +8,7 @@ import requests
 
 API_URL = "https://api.frankfurter.app/latest"
 DB_NEV = "arfolyam_naplo.db"
-DEVIZAK = ("HUF", "EUR", "USD", "GBP", "CHF")
+DEVIZAK = ("HUF", "EUR", "USD", "GBP", "CHF", "JPY", "CNY", "PLN", "CZK", "CAD", "AUD")
 
 
 def tv_atvaltas(osszeg, arfolyam):
