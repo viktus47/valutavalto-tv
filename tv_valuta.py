@@ -6,7 +6,7 @@ from tkinter import messagebox, ttk
 
 import requests
 
-API_URL = "https://api.frankfurter.app/latest"
+API_URL = "https://open.er-api.com/v6/latest/"
 DB_NEV = "arfolyam_naplo.db"
 DEVIZAK = ("HUF", "EUR", "USD", "GBP", "CHF", "JPY", "CNY", "PLN", "CZK", "CAD", "AUD")
 
@@ -282,11 +282,26 @@ class TvValutaValto:
         if forras == cel:
             return 1.0
 
-        parameterek = {"from": forras, "to": cel}
-        valasz = requests.get(API_URL, params=parameterek, timeout=5)
-        valasz.raise_for_status()
-        adatok = valasz.json()
-        return float(adatok["rates"][cel])
+        fejlec = {
+            "User-Agent": "Mozilla/5.0",
+            "Connection": "close"
+        }
+
+        for probalkozas in range(3):
+            try:
+                valasz = requests.get(
+                    f"{API_URL}{forras}",
+                    headers=fejlec,
+                    timeout=5
+                )
+                valasz.raise_for_status()
+                adatok = valasz.json()
+                return float(adatok["rates"][cel])
+            except requests.ConnectionError:
+                if probalkozas == 2:
+                    raise
+
+    API_URL = "https://open.er-api.com/v6/latest/"
 
     def atvaltas_esemeny(self):
         try:
